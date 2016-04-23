@@ -9,14 +9,13 @@ var gulp          = require('gulp'),            // Gulp core
     rename        = require('gulp-rename'),     // Rename files
     uglify        = require('gulp-uglify'),     // Minify JS files
 
-    autoprefixer  = require('autoprefixer'),             // Parse CSS and add vendor prefixes
-    del           = require('del'),                      // Delete files/folders using globs
-    lost          = require('lost'),                     // PostCSS fractional grid system built with calc()
-    mqpacker      = require('css-mqpacker'),             // Pack same CSS media query rules into one media query rule
-    path          = require('path'),                     // Node.JS path module
-    reporter      = require('postcss-reporter'),         // Log PostCSS messages in the console
-    stylelint     = require('stylelint'),                // CSS linter
-    suitcssConfig = require('stylelint-config-suitcss'); // SUIT CSS shareable config for stylelint
+    autoprefixer  = require('autoprefixer'),     // Parse CSS and add vendor prefixes
+    del           = require('del'),              // Delete files/folders using globs
+    lost          = require('lost'),             // PostCSS fractional grid system built with calc()
+    mqpacker      = require('css-mqpacker'),     // Pack same CSS media query rules into one media query rule
+    path          = require('path'),             // Node.JS path module
+    reporter      = require('postcss-reporter'), // Log PostCSS messages in the console
+    stylelint     = require('stylelint');        // CSS linter
 
 var root = __dirname;
 
@@ -25,7 +24,7 @@ var paths = {
     css:     path.join(root, 'src/css/'),
     scripts: path.join(root, 'src/scripts/')
   },
-  output: path.join(root, '../files/folderName')
+  output: path.join(root, '../files/folderName/')
 };
 
 var isProduction = true;
@@ -34,12 +33,16 @@ if (gutil.env.dev === true) {
   isProduction = false;
 }
 
-/* Lint CSS files (Rules: http://stylelint.io/?/docs/user-guide/rules.md) */
+/* Lint CSS files (Rules: http://stylelint.io/user-guide/rules) */
 gulp.task('lint:css', function() {
   return gulp.src(paths.src.css + '**/*.css')
     .pipe(postcss([
       stylelint({
-        "extends": "stylelint-config-suitcss"
+        "extends": "stylelint-config-standard",
+        "rules": {
+          "string-quotes": "double",
+          "function-url-quotes": "double",
+        }
       }),
       reporter({
         clearMessages: true
