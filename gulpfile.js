@@ -1,9 +1,9 @@
 var gulp          = require('gulp'),            // Gulp core
 
+    cleanCSS      = require('gulp-clean-css'),  // CSS minification
     concat        = require('gulp-concat'),     // Files concatenation
     eslint        = require('gulp-eslint'),     // An AST-based pattern checker for JavaScript
     gutil         = require('gulp-util'),       // Utility functions for gulp plugins
-    minifyCSS     = require('gulp-minify-css'), // CSS minification (clean-css)
     plumber       = require('gulp-plumber'),    // Prevent pipe breaking caused by errors
     postcss       = require('gulp-postcss'),    // Transforming CSS with JS plugins
     rename        = require('gulp-rename'),     // Rename files
@@ -77,7 +77,9 @@ gulp.task('css', function() {
     .pipe(postcss(processors))
     .pipe(isProduction ? concat('main.css') : gutil.noop())
     .pipe(isProduction ? rename({suffix: '.min'}) : gutil.noop())
-    .pipe(isProduction ? minifyCSS() : gutil.noop())
+    .pipe(isProduction ? cleanCSS({debug: true}, function(details) {
+            console.log(details.name + ': ' + Math.round(details.stats.efficiency * 100) + '% of the size was reduced.');
+        }) : gutil.noop())
     .pipe(gulp.dest(paths.output + 'css'));
 });
 
