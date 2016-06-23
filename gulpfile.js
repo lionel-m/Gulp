@@ -41,7 +41,6 @@ gulp.task('lint:css', function() {
         "extends": "stylelint-config-standard",
         "rules": {
           "string-quotes": "double",
-          "function-url-quotes": "double",
           "at-rule-no-vendor-prefix": true,
           "media-feature-name-no-vendor-prefix": true,
           "property-no-vendor-prefix": true,
