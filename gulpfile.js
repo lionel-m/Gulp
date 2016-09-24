@@ -1,25 +1,46 @@
-var gulp          = require('gulp'),            // Gulp core
+/*
+import gulp from 'gulp'; // Gulp core
 
-    cleanCSS      = require('gulp-clean-css'),  // CSS minification
-    concat        = require('gulp-concat'),     // Files concatenation
-    eslint        = require('gulp-eslint'),     // An AST-based pattern checker for JavaScript
-    gutil         = require('gulp-util'),       // Utility functions for gulp plugins
-    plumber       = require('gulp-plumber'),    // Prevent pipe breaking caused by errors
-    postcss       = require('gulp-postcss'),    // Transforming CSS with JS plugins
-    rename        = require('gulp-rename'),     // Rename files
-    uglify        = require('gulp-uglify'),     // Minify JS files
+import cleanCSS from 'gulp-clean-css'; // CSS minification
+import concat from 'gulp-concat';      // Files concatenation
+import eslint from 'gulp-eslint';      // An AST-based pattern checker for JavaScript
+import gutil from 'gulp-util';         // Utility functions for gulp plugins
+import plumber from 'gulp-plumber';    // Prevent pipe breaking caused by errors
+import postcss from 'gulp-postcss';    // Transforming CSS with JS plugins
+import rename from 'gulp-rename';      // Rename files
+import uglify from 'gulp-uglify';      // Minify JS files
 
-    autoprefixer  = require('autoprefixer'),     // Parse CSS and add vendor prefixes
-    del           = require('del'),              // Delete files/folders using globs
-    lost          = require('lost'),             // PostCSS fractional grid system built with calc()
-    mqpacker      = require('css-mqpacker'),     // Pack same CSS media query rules into one media query rule
-    path          = require('path'),             // Node.JS path module
-    reporter      = require('postcss-reporter'), // Log PostCSS messages in the console
-    stylelint     = require('stylelint');        // CSS linter
+import autoprefixer from 'autoprefixer'; // Parse CSS and add vendor prefixes
+import del from 'del';                   // Delete files/folders using globs
+import lost from 'lost';                 // PostCSS fractional grid system built with calc()
+import mqpacker from 'css-mqpacker';     // Pack same CSS media query rules into one media query rule
+import path from 'path';                 // Node.JS path module
+import reporter from 'postcss-reporter'; // Log PostCSS messages in the console
+import stylelint from 'stylelint';       // CSS linter
+*/
 
-var root = __dirname;
+const gulp          = require('gulp');            // Gulp core
 
-var paths = {
+const cleanCSS      = require('gulp-clean-css');  // CSS minification
+const concat        = require('gulp-concat');     // Files concatenation
+const eslint        = require('gulp-eslint');     // An AST-based pattern checker for JavaScript
+const gutil         = require('gulp-util');       // Utility functions for gulp plugins
+const plumber       = require('gulp-plumber');    // Prevent pipe breaking caused by errors
+const postcss       = require('gulp-postcss');    // Transforming CSS with JS plugins
+const rename        = require('gulp-rename');     // Rename files
+const uglify        = require('gulp-uglify');     // Minify JS files
+
+const autoprefixer  = require('autoprefixer');     // Parse CSS and add vendor prefixes
+const del           = require('del');              // Delete files/folders using globs
+const lost          = require('lost');             // PostCSS fractional grid system built with calc()
+const mqpacker      = require('css-mqpacker');     // Pack same CSS media query rules into one media query rule
+const path          = require('path');             // Node.JS path module
+const reporter      = require('postcss-reporter'); // Log PostCSS messages in the console
+const stylelint     = require('stylelint');        // CSS linter
+
+const root = __dirname;
+
+const paths = {
   src: {
     css:     path.join(root, 'src/css/'),
     scripts: path.join(root, 'src/scripts/')
@@ -34,7 +55,7 @@ if (gutil.env.dev === true) {
 }
 
 /* Lint CSS files (Rules: http://stylelint.io/user-guide/rules) */
-gulp.task('lint:css', function() {
+gulp.task('lint:css', () => {
   return gulp.src(paths.src.css + '**/*.css')
     .pipe(postcss([
       stylelint({
@@ -55,7 +76,7 @@ gulp.task('lint:css', function() {
 });
 
 /* Lint JS files */
-gulp.task('lint:js', function() {
+gulp.task('lint:js', () => {
   return gulp.src([paths.src.scripts + '**/*.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format())
@@ -63,14 +84,14 @@ gulp.task('lint:js', function() {
 });
 
 /* Clean files */
-gulp.task('clean', function() {
+gulp.task('clean', () => {
   return del([paths.output + 'css', paths.output + 'js'], {force: true});
 });
 
 /* Compile CSS files */
-gulp.task('css', function() {
+gulp.task('css', () => {
 
-  var processors = [
+  const processors = [
     autoprefixer({browsers: ['last 2 versions', 'ie 9']}),
     lost(),
     mqpacker
@@ -81,14 +102,14 @@ gulp.task('css', function() {
     .pipe(postcss(processors))
     .pipe(isProduction ? concat('main.css') : gutil.noop())
     .pipe(isProduction ? rename({suffix: '.min'}) : gutil.noop())
-    .pipe(isProduction ? cleanCSS({debug: true}, function(details) {
+    .pipe(isProduction ? cleanCSS({debug: true}, details => {
             console.log(details.name + ': ' + Math.round(details.stats.efficiency * 100) + '% of the size was reduced.');
         }) : gutil.noop())
     .pipe(gulp.dest(paths.output + 'css'));
 });
 
 /* Compile JS files */
-gulp.task('scripts', function() {
+gulp.task('scripts', () => {
 
   return gulp.src(paths.src.scripts + '**/*.js')
     .pipe(plumber())
@@ -99,13 +120,13 @@ gulp.task('scripts', function() {
 });
 
 /* Watch files */
-gulp.task('watch', function() {
+gulp.task('watch', () => {
   gulp.watch(paths.src.css + '**/*.css', ['css']);
   gulp.watch(paths.src.scripts + '**/*.js', ['scripts']);
 });
 
 /* Default task */
-gulp.task('default', ['clean'], function() {
+gulp.task('default', ['clean'], () => {
   gulp.start('css', 'scripts');
 });
 
