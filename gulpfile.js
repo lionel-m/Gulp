@@ -58,17 +58,7 @@ if (gutil.env.dev === true) {
 gulp.task('lint:css', () => {
   return gulp.src(paths.src.css + '**/*.css')
     .pipe(postcss([
-      stylelint({
-        "extends": "stylelint-config-standard",
-        "rules": {
-          "string-quotes": "double",
-          "at-rule-no-vendor-prefix": true,
-          "media-feature-name-no-vendor-prefix": true,
-          "property-no-vendor-prefix": true,
-          "selector-no-vendor-prefix": true,
-          "value-no-vendor-prefix": true
-        }
-      }),
+      stylelint(),
       reporter({
         clearMessages: true
       }),
