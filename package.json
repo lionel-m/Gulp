@@ -13,11 +13,11 @@
     "email": "info@example.com"
   },
   "devDependencies": {
-    "autoprefixer": "^6.4.1",
+    "autoprefixer": "^6.5.3",
     "css-mqpacker": "^5.0.1",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
-    "gulp-clean-css": "^2.0.12",
+    "gulp-clean-css": "^2.0.13",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^3.0.1",
     "gulp-plumber": "^1.1.0",
@@ -25,12 +25,12 @@
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "lost": "^7.1.0",
+    "lost": "^7.1.1",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
-    "postcss-reporter": "^1.4.1",
-    "stylelint": "^7.3.1",
-    "stylelint-config-standard": "^13.0.2",
+    "postcss-reporter": "^2.0.0",
+    "stylelint": "^7.5.0",
+    "stylelint-config-standard": "^14.0.0",
     "uglify": "^0.1.5"
   }
 }
