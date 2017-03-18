@@ -37,6 +37,7 @@ const mqpacker      = require('css-mqpacker');     // Pack same CSS media query 
 const path          = require('path');             // Node.JS path module
 const reporter      = require('postcss-reporter'); // Log PostCSS messages in the console
 const stylelint     = require('stylelint');        // CSS linter
+const stylefmt      = require('gulp-stylefmt');    // stylefmt automatically formats CSS according to stylelint rules
 
 const root = __dirname;
 
@@ -78,6 +79,13 @@ gulp.task('clean', () => {
   return del([paths.output + 'css', paths.output + 'js'], {force: true});
 });
 
+/* Formats CSS according to stylelint rules */
+gulp.task('stylefmt', () => {
+  return gulp.src(paths.src.css + '**/*.css')
+    .pipe(stylefmt())
+    .pipe(gulp.dest(paths.output + 'css'));
+});
+
 /* Compile CSS files */
 gulp.task('css', () => {
 
@@ -100,7 +108,6 @@ gulp.task('css', () => {
 
 /* Compile JS files */
 gulp.task('scripts', () => {
-
   return gulp.src(paths.src.scripts + '**/*.js')
     .pipe(plumber())
     .pipe(isProduction ? concat('main.js') : gutil.noop())
