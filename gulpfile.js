@@ -19,25 +19,24 @@ import reporter from 'postcss-reporter'; // Log PostCSS messages in the console
 import stylelint from 'stylelint';       // CSS linter
 */
 
-const gulp          = require('gulp');            // Gulp core
-
-const cleanCSS      = require('gulp-clean-css');  // CSS minification
-const concat        = require('gulp-concat');     // Files concatenation
-const eslint        = require('gulp-eslint');     // An AST-based pattern checker for JavaScript
-const gutil         = require('gulp-util');       // Utility functions for gulp plugins
-const plumber       = require('gulp-plumber');    // Prevent pipe breaking caused by errors
-const postcss       = require('gulp-postcss');    // Transforming CSS with JS plugins
-const rename        = require('gulp-rename');     // Rename files
-const uglify        = require('gulp-uglify');     // Minify JS files
-
-const autoprefixer  = require('autoprefixer');     // Parse CSS and add vendor prefixes
-const del           = require('del');              // Delete files/folders using globs
-const lost          = require('lost');             // PostCSS fractional grid system built with calc()
-const mqpacker      = require('css-mqpacker');     // Pack same CSS media query rules into one media query rule
-const path          = require('path');             // Node.JS path module
-const reporter      = require('postcss-reporter'); // Log PostCSS messages in the console
-const stylelint     = require('stylelint');        // CSS linter
-const stylefmt      = require('gulp-stylefmt');    // stylefmt automatically formats CSS according to stylelint rules
+const gulp          = require('gulp');                  // Gulp core
+const cleanCSS      = require('gulp-clean-css');        // CSS minification
+const concat        = require('gulp-concat');           // Files concatenation
+const eslint        = require('gulp-eslint');           // An AST-based pattern checker for JavaScript
+const gutil         = require('gulp-util');             // Utility functions for gulp plugins
+const plumber       = require('gulp-plumber');          // Prevent pipe breaking caused by errors
+const postcss       = require('gulp-postcss');          // Transforming CSS with JS plugins
+const rename        = require('gulp-rename');           // Rename files
+const uglify        = require('gulp-uglify');           // Minify JS files
+const stylefmt      = require('gulp-stylefmt');         // Automatically formats CSS according to stylelint rules
+const autoprefixer  = require('autoprefixer');          // Parse CSS and add vendor prefixes
+const del           = require('del');                   // Delete files/folders using globs
+const lost          = require('lost');                  // PostCSS fractional grid system built with calc()
+const mqpacker      = require('css-mqpacker');          // Pack same CSS media query rules into one media query rule
+const path          = require('path');                  // Node.JS path module
+const reporter      = require('postcss-reporter');      // Log PostCSS messages in the console
+const stylelint     = require('stylelint');             // CSS linter
+const fontMagician  = require('postcss-font-magician'); // Automatically generates @font-face rules
 
 const root = __dirname;
 
@@ -103,6 +102,14 @@ gulp.task('css', () => {
     .pipe(isProduction ? cleanCSS({debug: true}, details => {
             console.log(details.name + ': ' + Math.round(details.stats.efficiency * 100) + '% of the size was reduced.');
         }) : gutil.noop())
+    .pipe(gulp.dest(paths.output + 'css'));
+});
+
+/* Automatically generates @font-face rules */
+gulp.task('generate:font', () => {
+  return gulp.src(paths.src.css + '**/*.css')
+    .pipe(
+      postcss([fontMagician()]))
     .pipe(gulp.dest(paths.output + 'css'));
 });
 
