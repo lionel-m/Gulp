@@ -60,7 +60,7 @@ gulp.task('lint:css', () => {
     .pipe(postcss([
       stylelint(),
       reporter({
-        clearMessages: true
+        clearReportedMessages: true
       }),
     ]));
 });
