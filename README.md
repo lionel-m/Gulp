@@ -5,7 +5,11 @@ Personal Gulp workflow
 
 Run `gulp --dev` during the development phase or `gulp` for production (concatenate and minify JS and CSS files).
 
+*********
+
 Run `gulp lint` tests your JS and CSS files.
+
+*********
 
 Run `generate:font` automatically generates @font-face rules
 
@@ -35,5 +39,7 @@ body {
   font-family: "Alice";
 }
 ```
+
+*********
 
 Run `stylefmt` formats CSS according to stylelint rules
