@@ -1,24 +1,3 @@
-/*
-import gulp from 'gulp'; // Gulp core
-
-import cleanCSS from 'gulp-clean-css'; // CSS minification
-import concat from 'gulp-concat';      // Files concatenation
-import eslint from 'gulp-eslint';      // An AST-based pattern checker for JavaScript
-import gutil from 'gulp-util';         // Utility functions for gulp plugins
-import plumber from 'gulp-plumber';    // Prevent pipe breaking caused by errors
-import postcss from 'gulp-postcss';    // Transforming CSS with JS plugins
-import rename from 'gulp-rename';      // Rename files
-import uglify from 'gulp-uglify';      // Minify JS files
-
-import autoprefixer from 'autoprefixer'; // Parse CSS and add vendor prefixes
-import del from 'del';                   // Delete files/folders using globs
-import lost from 'lost';                 // PostCSS fractional grid system built with calc()
-import mqpacker from 'css-mqpacker';     // Pack same CSS media query rules into one media query rule
-import path from 'path';                 // Node.JS path module
-import reporter from 'postcss-reporter'; // Log PostCSS messages in the console
-import stylelint from 'stylelint';       // CSS linter
-*/
-
 const gulp          = require('gulp');                  // Gulp core
 const cleanCSS      = require('gulp-clean-css');        // CSS minification
 const concat        = require('gulp-concat');           // Files concatenation
